@@ -17,21 +17,22 @@ class BaseRepository implements BaseInterfaceRepository
         return $this->model->get();
     }
 
-    public function get($id) {
-
+    public function get($id) 
+    {
+        return $this->model->findOrFail($id);
     }
 
     public function store(array $data) 
     {
         return $this->model->create($data);
-
     }
 
     public function update($id, array $data) {
 
     }
 
-    public function delete($id) {
-
+    public function delete($id) 
+    {
+        return $this->model->findOrFail($id)->delete();
     }
 }

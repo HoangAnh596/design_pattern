@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\User\UserInterfaceRepository;
+// use App\Repositories\User\UserInterfaceRepository;
+use App\Services\User\UserInterfaceService;
 
 class UserController extends Controller
 {
@@ -13,15 +14,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected $baseRepository; 
-    public function __construct(UserInterfaceRepository $baseRepository)
+    protected $baseService; 
+    public function __construct(UserInterfaceService $baseService)
     {
-        $this->baseRepository = $baseRepository;
+        $this->baseService = $baseService;
     }
 
     public function index()
     {
-        $user = $this->baseRepository->all();
+        $user = $this->baseService->all();
 
         return view('user.index', compact('user'));
     }

@@ -29,6 +29,11 @@
             <td>
                 <a class="btn btn-primary" href="{{ asset('test/'.$item->id.'/edit') }}">Edit</a>
                 <a class="btn btn-success" href="{{ asset('test/'.$item->id) }}">Detail</a>
+                <form action="{{ route('test.destroy', ['test' => $item->id]) }}" method="post">
+                    @csrf
+                    @method('Delete')
+                    <input type="submit" class="btn btn-danger" value="Delete" onclick="return confirm('Do you really want to delete?')" />
+                </form>
             </td>
         </tr>
         @endforeach

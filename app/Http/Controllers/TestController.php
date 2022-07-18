@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\Test\TestInterfaceRepository;
+use App\Services\Test\TestInterfaceService;
 use Illuminate\Http\Request;
 
 class TestController extends Controller
@@ -13,17 +13,17 @@ class TestController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    protected $baseRepository; 
-    public function __construct(TestInterfaceRepository $baseRepository)
+    protected $baseService; 
+    public function __construct(TestInterfaceService $baseService)
     {
-        $this->baseRepository = $baseRepository;
+        $this->baseService = $baseService;
     }
 
     public function index()
     {
         // $test = Test::all();
 
-        $test = $this->baseRepository->all();
+        $test = $this->baseService->all();
 
         return view('test.index', compact('test'));
     }
@@ -50,7 +50,7 @@ class TestController extends Controller
         // $test->fill($request->all());
         // $test->save();
 
-        $this->baseRepository->store($request->all());
+        $this->baseService->store($request->all());
 
         return redirect(route('test.index'))->with(['message' => 'Create success']);
     }
@@ -63,7 +63,9 @@ class TestController extends Controller
      */
     public function show($id)
     {
-        //
+        $test = $this->baseService->get($id);
+
+        return view('test.show', compact('test'));
     }
 
     /**
@@ -97,6 +99,8 @@ class TestController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->baseService->delete($id);
+
+        return redirect()->route('test.index')->with(['message' => 'Delete Success']);
     }
 }
